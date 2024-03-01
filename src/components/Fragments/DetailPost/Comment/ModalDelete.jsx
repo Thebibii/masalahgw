@@ -3,7 +3,6 @@ import { useModal } from "../../../../stores/modal";
 import { useShallow } from "zustand/react/shallow";
 import Button from "../../../Elements/Button";
 import { useUserDeleteComment } from "../../../../features/comments/user/useUserDeleteComment";
-import { useAppStore } from "../../../../stores/app-store";
 import { useQueryClient } from "@tanstack/react-query";
 
 const ModalDelete = ({ id }) => {
@@ -12,21 +11,21 @@ const ModalDelete = ({ id }) => {
   const [modalDeleteCmt, closeModalDeleteCmt] = useModal(
     useShallow((state) => [state.modalDeleteCmt, state.closeModalDeleteCmt])
   );
-  const token = useAppStore((state) => state.token);
   const { mutate, isPending } = useUserDeleteComment({
-    token,
-    onSuccess: () => {
+    onSuccess: async () => {
       queryClient.invalidateQueries(["detailPost.post"]);
       queryClient.invalidateQueries(["allNotif.notif"]);
-      if (isPending) closeModalDeleteCmt();
+      closeModalDeleteCmt();
     },
     id,
   });
 
-  const handleDelete = () => {
+  const handleDelete = async () => {
     try {
       mutate();
-    } catch (error) {}
+    } catch (error) {
+      console.log(error);
+    }
   };
   return (
     <div
@@ -46,10 +45,14 @@ const ModalDelete = ({ id }) => {
         <div className="p-6 pt-0">
           <div className="flex justify-end gap-2">
             <Button
-              classname="justify-center px-4 shadow-sm bg-destructive hover:bg-destructive/90 text-destructiveForeground"
+              classname={`justify-center px-4 shadow-sm ${
+                isPending
+                  ? "bg-black animate-pulse"
+                  : "bg-destructive hover:bg-destructive/90"
+              }  text-destructiveForeground`}
               onClick={handleDelete}
             >
-              Yaudah Sih
+              {isPending ? "Sabar.." : "Yaudah Sih"}
             </Button>
             <Button
               classname="justify-center px-4 bg-transparent border shadow-sm hover:bg-accent hover:text-accentForeground border-input"

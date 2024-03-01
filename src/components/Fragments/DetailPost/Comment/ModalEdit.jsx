@@ -6,7 +6,6 @@ import Button from "../../../Elements/Button";
 import { useDropdown } from "../../../../stores/dropdown-store";
 import { useFormik } from "formik";
 import { useUserEditComment } from "../../../../features/comments/user/useUserEditComment";
-import { useAppStore } from "../../../../stores/app-store";
 import { useQueryClient } from "@tanstack/react-query";
 import { useNotification } from "../../../../hooks/useNotification";
 
@@ -16,9 +15,6 @@ const ModalEdit = (props) => {
   const [modalEditCmt, closeModalEditCmt] = useModal(
     useShallow((state) => [state.modalEditCmt, state.closeModalEditCmt])
   );
-
-  const token = useAppStore((state) => state.token);
-
   const closeEditKomen = useDropdown((state) => state.closeEditKomen);
 
   const formik = useFormik({
@@ -27,13 +23,11 @@ const ModalEdit = (props) => {
     },
     onSubmit: async () => {
       const { content } = formik.values;
-      console.log(content);
       mutate({ content });
     },
   });
 
   const { mutate, isPending } = useUserEditComment({
-    token,
     onSuccess: () => {
       queryClient.invalidateQueries(["detailPost.post"]);
       if (isPending) {
@@ -70,10 +64,14 @@ const ModalEdit = (props) => {
             />
             <div className="flex gap-2 mt-2">
               <Button
-                classname="justify-center w-1/2 px-4 py-2 bg-primary text-primaryForeground hover:bg-primary/90"
+                classname={`justify-center w-1/2 px-4 py-2 ${
+                  isPending
+                    ? "bg-primary/60 shadow animate-pulse"
+                    : "bg-primary shadow hover:bg-primary/80"
+                } text-primaryForeground `}
                 type="submit"
               >
-                Edit Komen
+                {isPending ? "Sabar..." : "Edit Komen"}
               </Button>
               <Button
                 classname="justify-center w-1/2 px-4 py-2 bg-transparent border border-input"

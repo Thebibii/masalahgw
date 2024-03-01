@@ -1,7 +1,9 @@
 import { useMutation } from "@tanstack/react-query";
 import { axiosInstance } from "../../../lib/axios";
+import Cookies from "js-cookie";
 
-export const useUserDeleteComment = ({ token, onSuccess, id }) => {
+export const useUserDeleteComment = ({ onSuccess, id }) => {
+  const token = Cookies.get("token");
   return useMutation({
     mutationKey: ["deleteUser.comment", id],
     mutationFn: async () => {
