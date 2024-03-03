@@ -15,10 +15,6 @@ const ModalDelete = ({ id }) => {
     onSuccess: async () => {
       queryClient.invalidateQueries(["detailPost.post"]);
       queryClient.invalidateQueries(["allNotif.notif"]);
-<<<<<<< Updated upstream
-      closeModalDeleteCmt();
-=======
->>>>>>> Stashed changes
     },
     id,
   });
@@ -28,11 +24,8 @@ const ModalDelete = ({ id }) => {
       mutate();
     } catch (error) {
       console.log(error);
-<<<<<<< Updated upstream
-=======
     } finally {
       isPending && closeModalDeleteCmt();
->>>>>>> Stashed changes
     }
   };
   return (
@@ -55,11 +48,7 @@ const ModalDelete = ({ id }) => {
             <Button
               classname={`justify-center px-4 shadow-sm ${
                 isPending
-<<<<<<< Updated upstream
-                  ? "bg-black animate-pulse"
-=======
                   ? "bg-destructive/60 animate-pulse"
->>>>>>> Stashed changes
                   : "bg-destructive hover:bg-destructive/90"
               }  text-destructiveForeground`}
               onClick={handleDelete}
