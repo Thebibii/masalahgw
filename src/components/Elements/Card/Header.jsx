@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { useCharAt } from "../../../hooks/useCharAt";
 
 const Header = (props) => {
   const { inisial, name, email } = props;
@@ -11,7 +12,7 @@ const Header = (props) => {
         <div className="flex items-start gap-4">
           <span className="relative flex w-10 h-10 overflow-hidden rounded-md shrink-0">
             <span className="flex items-center justify-center w-full h-full text-white bg-black rounded-md">
-              {inisial}
+              {useCharAt(inisial)}
             </span>
           </span>
           <div className="space-y-1">

@@ -4,6 +4,7 @@ import Button from "../Elements/Button";
 import { useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
 import { useRegister } from "../../features/auth/useRegister";
+import { useUsername } from "../../hooks/useCharAt";
 
 const FormRegister = () => {
   const navigate = useNavigate();
@@ -12,8 +13,9 @@ const FormRegister = () => {
     initialValues: { name: "", email: "", password: "" },
     onSubmit: async () => {
       const { name, email, password } = formik.values;
+      const modifiedName = useUsername(name);
       mutate({
-        name,
+        name: modifiedName,
         email,
         password,
       });

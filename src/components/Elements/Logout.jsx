@@ -9,11 +9,13 @@ export const Logout = () => {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
   const user = queryClient.getQueryData(["userLogin.user"]);
+  const token = Cookies.get("token");
   const { mutate, isPending } = useLogoutUser({
     onSuccess: () => {
       Cookies.remove("token");
       if (isPending) {
         navigate("/login");
+        queryClient.removeQueries();
       }
     },
   });

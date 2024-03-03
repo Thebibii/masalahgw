@@ -1,5 +1,6 @@
 import React from "react";
 import { useQueryClient } from "@tanstack/react-query";
+import { useCharAt } from "../../hooks/useCharAt";
 
 const Navbar = () => {
   const queryClient = useQueryClient();
@@ -14,7 +15,7 @@ const Navbar = () => {
           <a href="" className="flex items-center">
             {user ? (
               <span className="px-4 py-2 text-white bg-black rounded-md">
-                {user?.data?.name.charAt(0)}
+                {useCharAt(user?.data?.name)}
               </span>
             ) : (
               <span className="px-5 py-5 bg-gray-300 rounded-md shadow-sm animate-pulse"></span>
