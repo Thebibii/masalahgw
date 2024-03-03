@@ -66,12 +66,21 @@ const ModalEdit = (props) => {
               <Button
                 classname={`justify-center w-1/2 px-4 py-2 ${
                   isPending
+<<<<<<< Updated upstream
                     ? "bg-primary/60 shadow animate-pulse"
                     : "bg-primary shadow hover:bg-primary/80"
                 } text-primaryForeground `}
                 type="submit"
               >
                 {isPending ? "Sabar..." : "Edit Komen"}
+=======
+                    ? "bg-primary/60 animate-pulse"
+                    : "bg-primary hover:bg-primary/90"
+                } text-primaryForeground `}
+                type="submit"
+              >
+                {isPending ? "Sabar.." : "Edit Komen"}
+>>>>>>> Stashed changes
               </Button>
               <Button
                 classname="justify-center w-1/2 px-4 py-2 bg-transparent border border-input"

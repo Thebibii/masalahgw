@@ -2,31 +2,29 @@ import React from "react";
 import { Link, useParams } from "react-router-dom";
 import Button from "../../Elements/Button";
 import { useQueryClient } from "@tanstack/react-query";
+import CardPost from "../../Elements/Card";
+import { useCreatedAt } from "../../../hooks/useCreatedAt";
 
 const Post = () => {
   const { id } = useParams();
   const queryClient = useQueryClient();
   const post = queryClient.getQueryData(["detailPost.post", id]);
   return (
-    <div className="border shadow rounded-xl bg-card text-card-foreground">
+    /*  <div className="border shadow rounded-xl bg-card text-card-foreground">
       <a href="/profil/undefined">
         <h3 className="p-4 pb-0 font-semibold leading-none tracking-tight group false">
           <div className="flex items-start gap-4">
             <span className="relative flex w-10 h-10 overflow-hidden rounded-md shrink-0">
               <span className="flex items-center justify-center w-full h-full rounded-md bg-[#F1F5F9]">
-                {post?.data.user
-                  ? post?.data.user.name.charAt(0)
-                  : post?.data.anonymous.name.charAt(0)}
+               
               </span>
             </span>
             <div className="space-y-1">
               <h2 className="false">
-                {post?.data.user ? post?.data.user.name : "Anonymous"}
+                
               </h2>
               <p className="text-foreground/60 false">
-                {post?.data.user
-                  ? post?.data.user.email
-                  : post?.data.anonymous.name}
+                
               </p>
             </div>
           </div>
@@ -38,7 +36,7 @@ const Post = () => {
             Dibuat saat 1 hari yang lalu
           </small>
         </div>
-        <p className="mt-1 break-all">{post?.data.content}</p>
+        <p className="mt-1 break-all"></p>
       </div>
       <div className="flex flex-col items-start p-0 pb-2">
         <div
@@ -87,7 +85,7 @@ const Post = () => {
               <line x1="15.41" x2="8.59" y1="6.51" y2="10.49"></line>
             </svg>
           </Button>
-          <button className="inline-flex items-center justify-center text-sm font-medium transition-colors rounded-md shadow-sm focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 bg-destructive text-destructive-foreground hover:bg-destructive/90 h-9 w-9">
+          <button className="inline-flex items-center justify-center text-sm font-medium transition-colors rounded-md shadow-sm focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 bg-destructive text-destructiveForeground hover:bg-destructive/90 h-9 w-9">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="24"
@@ -106,7 +104,29 @@ const Post = () => {
           </button>
         </div>
       </div>
-    </div>
+    </div> */
+    <CardPost>
+      <CardPost.Header
+        inisial={
+          post?.data.user
+            ? post?.data.user.name.charAt(0)
+            : post?.data.anonymous.name.charAt(0)
+        }
+        name={post?.data.user ? post?.data.user.name : "Anonymous"}
+        email={
+          post?.data.user ? post?.data.user.email : post?.data.anonymous.name
+        }
+      />
+      <CardPost.Body
+        created_at={post?.data.created_at}
+        content={post?.data.content}
+      />
+      <CardPost.Footer
+        count={post?.data.comments_count}
+        link={post?.data.id}
+        type="index"
+      />
+    </CardPost>
   );
 };
 

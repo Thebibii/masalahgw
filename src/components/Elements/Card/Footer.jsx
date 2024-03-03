@@ -1,11 +1,12 @@
 import React from "react";
 import Button from "../Button";
 import { Link } from "react-router-dom";
-import { useAppStore } from "../../../stores/app-store";
 import { CommentSvg } from "../../../assets/icons/comment";
 import { ShareSvg } from "../../../assets/icons/share";
 import { DeleteSvg } from "../../../assets/icons/delete";
 import { EditSvg } from "../../../assets/icons/edit";
+import { useQueryClient } from "@tanstack/react-query";
+import ReportSvg from "../../../assets/icons/report";
 
 const Footer = (props) => {
   const {
@@ -15,7 +16,8 @@ const Footer = (props) => {
     onClick = () => {},
     onClickDelete = () => {},
   } = props;
-  const user = useAppStore((state) => state.user);
+  const queryClient = useQueryClient();
+  const user = queryClient.getQueryData(["userLogin.user"]);
   return (
     <div className="flex flex-col items-start p-0 pb-2">
       <div
@@ -36,30 +38,16 @@ const Footer = (props) => {
             <Button classname="justify-center space-x-2 border border-gray-300 shadow-sm w-9 hover:bg-gray-100">
               <ShareSvg />
             </Button>
-            {user.role == "common" && (
-              <Button classname="justify-center space-x-2 border border-gray-300 shadow-sm w-9 hover:bg-gray-100">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  className="w-5 aspect-square"
-                >
-                  <path d="m3 11 18-5v12L3 14v-3z"></path>
-                  <path d="M11.6 16.8a3 3 0 1 1-5.8-1.6"></path>
-                </svg>
+            {user?.data.role == "common" && (
+              <Button classname="justify-center space-x-2 shadow-sm bg-destructive text-destructiveForeground w-9 hover:bg-destructive/80">
+                <ReportSvg />
               </Button>
             )}
 
-            {user.role == "admin" && (
+            {user?.data.role == "admin" && (
               <Button
                 onClick={onClickDelete}
-                classname="justify-center space-x-2 border border-gray-300 shadow-sm w-9 hover:bg-gray-100"
+                classname="justify-center space-x-2 shadow-sm bg-destructive text-destructiveForeground w-9 hover:bg-destructive/80"
               >
                 <DeleteSvg />
               </Button>

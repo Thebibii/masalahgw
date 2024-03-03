@@ -1,19 +1,14 @@
 import React, { useEffect } from "react";
 import Button from "../../Elements/Button";
-import { useAppStore } from "../../../stores/app-store";
 import InputForm from "../../Elements/Input";
 import { useFormik } from "formik";
 import { useUpdateUserLogin } from "../../../features/user/useUpdateUserLogin";
 import { useQueryClient } from "@tanstack/react-query";
 import { useFetchUserLogin } from "../../../features/user/useFetchUserLogin";
-import { useShallow } from "zustand/react/shallow";
 import { Toaster } from "react-hot-toast";
 import { useNotification } from "../../../hooks/useNotification";
 
 const Body = () => {
-  const [token, setUser] = useAppStore(
-    useShallow((state) => [state.token, state.setUser])
-  );
   const queryClient = useQueryClient();
   const { data: user, isLoading } = useFetchUserLogin();
   const formik = useFormik({
@@ -44,10 +39,8 @@ const Body = () => {
   }, [isLoading]);
 
   const { mutate, isPending } = useUpdateUserLogin({
-    token,
-    onSuccess: async (data) => {
+    onSuccess: async () => {
       queryClient.invalidateQueries(["userLogin.user"]);
-      setUser(data.data);
       if (isPending) {
         useNotification("Berhasil ye ubah profile lu..");
       }

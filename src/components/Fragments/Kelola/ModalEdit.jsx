@@ -1,6 +1,5 @@
 import React from "react";
 import Button from "../../Elements/Button";
-import { useAppStore } from "../../../stores/app-store";
 import { useModal } from "../../../stores/modal";
 import { useNotification } from "../../../hooks/useNotification";
 import { useShallow } from "zustand/react/shallow";
@@ -15,7 +14,6 @@ import Validasi from "../../Elements/validasi";
 const ModalEdit = (props) => {
   const queryClient = useQueryClient();
   const { id, content } = props;
-  const token = useAppStore((state) => state.token);
   const [modalEditCmt, closeModalEditCmt] = useModal(
     useShallow((state) => [state.modalEditCmt, state.closeModalEditCmt])
   );
@@ -49,7 +47,6 @@ const ModalEdit = (props) => {
   });
 
   const { mutate, isPending } = useEditPost({
-    token,
     onSuccess: async () => {
       queryClient.invalidateQueries(["postUserLogin.post"]);
       if (isPending) {
@@ -110,7 +107,7 @@ const ModalEdit = (props) => {
                   disabled={isPending}
                   type="submit"
                 >
-                  {isPending ? "Sabar Cok..." : "Edit Postingan"}
+                  {isPending ? "Sabar Cok.." : "Edit Postingan"}
                 </Button>
                 <Button
                   type="button"

@@ -5,7 +5,7 @@ import Cookies from "js-cookie";
 export const useLogoutUser = ({ onSuccess }) => {
   const token = Cookies.get("token");
   return useMutation({
-    mutationKey: ["userLogout.user"],
+    mutationKey: ["userLogout.auth"],
     mutationFn: async () => {
       const response = await axiosInstance.delete(
         "http://localhost/laravel_react_api/public/api/logout",

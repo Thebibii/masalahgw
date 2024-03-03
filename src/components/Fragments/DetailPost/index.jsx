@@ -1,5 +1,4 @@
 import React from "react";
-import { useAppStore } from "../../../stores/app-store";
 import { useParams } from "react-router-dom";
 import Post from "./Post";
 import { useDetailPost } from "../../../features/post/useDetailPost";
@@ -8,12 +7,11 @@ import Comment from "./Comment/Comment";
 
 const DetailPost = () => {
   const { id } = useParams();
-  const token = useAppStore((state) => state.token);
-  const { data, isLoading } = useDetailPost({ token, id });
+  const { data, isLoading, isError } = useDetailPost({ id });
 
   return (
     <div className="px-8 pb-10 mt-4">
-      {isLoading && (
+      {isLoading || isError ? (
         <>
           <div className="animate-pulse w-full h-24 rounded-md bg-[#F1F5F9]"></div>
           <div className="flex items-center gap-2 mt-4">
@@ -27,9 +25,9 @@ const DetailPost = () => {
             </div>
           </div>
         </>
-      )}
+      ) : null}
 
-      {!isLoading && data?.data && (
+      {data && data?.data && (
         <>
           <Post />
           <InputComment />

@@ -35,7 +35,7 @@ const FormLogin = () => {
     }),
   });
 
-  const { data, refetch } = useFetchUserLogin({ enabled: false });
+  const { refetch } = useFetchUserLogin({ enabled: false });
 
   const { mutate, isPending, isSuccess } = useLogin({
     onSuccess: async (data) => {
@@ -45,11 +45,12 @@ const FormLogin = () => {
   });
 
   useEffect(() => {
-    if (token) {
-      navigate("/");
+    if (token && isSuccess) {
       refetch();
+      navigate("/");
     }
   }, [token]);
+
   return (
     <form onSubmit={formik.handleSubmit}>
       <div className="space-y-2">
@@ -74,9 +75,13 @@ const FormLogin = () => {
       </div>
       <Button
         type="submit"
-        classname="justify-center w-full mt-4 text-white bg-black shadow hover:bg-black/90"
+        classname={`justify-center w-full mt-4 text-white ${
+          isPending
+            ? "bg-primary/80 animate-pulse"
+            : "bg-primary hover:bg-primary/90"
+        } shadow `}
       >
-        {isPending ? "Sabar" : "Login"}
+        {isPending ? "Sabar..." : "Login"}
       </Button>
     </form>
   );

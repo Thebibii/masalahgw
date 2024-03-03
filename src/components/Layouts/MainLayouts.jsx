@@ -1,9 +1,12 @@
 import React, { Fragment } from "react";
 import Sidebar from "../Fragments/Sidebar";
 import Navbar from "../Fragments/Navbar";
+import { useFetchUserLogin } from "../../features/user/useFetchUserLogin";
 
 const MainLayouts = (props) => {
   const { children } = props;
+  useFetchUserLogin();
+
   return (
     <Fragment>
       <Navbar />

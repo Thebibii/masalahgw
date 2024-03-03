@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { useAppStore } from "../../../../stores/app-store";
 import Button from "../../../Elements/Button";
 import { useCreatedAt } from "../../../../hooks/useCreatedAt";
 import ModalEdit from "./ModalEdit";
@@ -10,24 +9,18 @@ import { Link } from "react-router-dom";
 import { Toaster } from "react-hot-toast";
 import ReplySvg from "../../../../assets/icons/reply";
 import ModalDelete from "./ModalDelete";
+import { useQueryClient } from "@tanstack/react-query";
 
 const Comment = ({ response }) => {
-  const user = useAppStore((state) => state.user);
+  const queryClient = useQueryClient();
+  const user = queryClient.getQueryData(["userLogin.user"]);
   const [getId, setGetId] = useState(null);
   const [getContent, setGetContent] = useState(null);
-  const [modalEditCmt, openModalEditCmt, closeModalEditCmt] = useModal(
-    useShallow((state) => [
-      state.modalEditCmt,
-      state.openModalEditCmt,
-      state.closeModalEditCmt,
-    ])
+  const [openModalEditCmt, closeModalEditCmt] = useModal(
+    useShallow((state) => [state.openModalEditCmt, state.closeModalEditCmt])
   );
-  const [modalDeleteCmt, openModalDeleteCmt, closeModalDeleteCmt] = useModal(
-    useShallow((state) => [
-      state.modalDeleteCmt,
-      state.openModalDeleteCmt,
-      state.closeModalDeleteCmt,
-    ])
+  const [openModalDeleteCmt, closeModalDeleteCmt] = useModal(
+    useShallow((state) => [state.openModalDeleteCmt, state.closeModalDeleteCmt])
   );
   const [isDrop, updateIsDrop] = useDropdown(
     useShallow((state) => [state.dropEditKomen, state.updateEditKomen])
@@ -57,7 +50,7 @@ const Comment = ({ response }) => {
                   <Link to="/profil/adicss">
                     <div
                       className={`inline-flex items-center rounded-md border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 text-foreground ${
-                        user?.id == item.user.id
+                        user?.data?.id == item.user.id
                           ? "bg-[#0F172A] text-[#F8FAFC]"
                           : "text-black"
                       }`}
@@ -69,7 +62,7 @@ const Comment = ({ response }) => {
                     {useCreatedAt(item.created_at)}
                   </p>
                 </div>
-                {user?.id == item.user.id && (
+                {user?.data?.id == item.user.id && (
                   <div className="relative">
                     <Button
                       classname="gap-2 px-3 text-xs border relative border-[#E2E8F0] shadow-sm"

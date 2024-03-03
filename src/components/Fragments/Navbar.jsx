@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from "react";
-import { useAppStore } from "../../stores/app-store";
+import React from "react";
+import { useQueryClient } from "@tanstack/react-query";
 
 const Navbar = () => {
-  const user = useAppStore((state) => state.user);
-
+  const queryClient = useQueryClient();
+  const user = queryClient.getQueryData(["userLogin.user"]);
   return (
     <nav className="py-4 border-b">
       <div className="container px-8 mx-auto">
@@ -12,9 +12,13 @@ const Navbar = () => {
             MasalahGw
           </a>
           <a href="" className="flex items-center">
-            <span className="px-4 py-2 text-white bg-black rounded-md">
-              {user.name?.charAt(0)}
-            </span>
+            {user ? (
+              <span className="px-4 py-2 text-white bg-black rounded-md">
+                {user?.data?.name.charAt(0)}
+              </span>
+            ) : (
+              <span className="px-5 py-5 bg-gray-300 rounded-md shadow-sm animate-pulse"></span>
+            )}
           </a>
         </div>
       </div>

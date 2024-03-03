@@ -3,13 +3,9 @@ import KategoriDiskusi from "./KategoriDiskusi";
 import Pengaturan from "./Pengaturan";
 import { Logout } from "../../Elements/Logout";
 import { useFetchNotif } from "../../../features/notification/useFetchNotif";
-import { useAppStore } from "../../../stores/app-store";
-import { useFetchUserLogin } from "../../../features/user/useFetchUserLogin";
 
 const Sidebar = () => {
-  const token = useAppStore((state) => state.token);
-  const { data } = useFetchNotif(token);
-  useFetchUserLogin();
+  const { data } = useFetchNotif();
   return (
     <aside
       className="
