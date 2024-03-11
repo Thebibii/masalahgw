@@ -9,8 +9,6 @@ import Cookies from "js-cookie";
 import { useFetchUserLogin } from "../../features/user/useFetchUserLogin";
 import * as yup from "yup";
 import Validasi from "../Elements/validasi";
-import { axiosInstance } from "../../lib/axios";
-import axios from "axios";
 
 const FormLogin = () => {
   const token = Cookies.get("token");
@@ -41,8 +39,6 @@ const FormLogin = () => {
 
   const { mutate, isPending, isSuccess } = useLogin({
     onSuccess: async (data) => {
-      axios.get("https://masalahgw-api.000webhostapp.com/sanctum/csrf-cookie");
-
       Cookies.set("token", data.token, { expires: 1 / 8 });
       queryClient.removeQueries(["allNotif.notif"]);
     },
