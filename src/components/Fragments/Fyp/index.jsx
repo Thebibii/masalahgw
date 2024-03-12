@@ -14,9 +14,9 @@ const Fyp = () => {
   const token = Cookies.get("token");
   const openModalDelete = useModal((state) => state.openModalDelete);
 
-  /* useEffect(() => {
+  useEffect(() => {
     if (!token) navigate("/login");
-  }, [token]); */
+  }, [token]);
 
   const { data, isLoading } = useFetchPost(token);
 

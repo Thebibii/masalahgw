@@ -1,6 +1,6 @@
 import axios from "axios";
 
 export const axiosInstance = axios.create({
-  baseURL: "http://laravel_react_api.test/api/",
+  baseURL: "https://masalahgwapiv1.vercel.app/api/api/",
   withCredentials: true,
 });
