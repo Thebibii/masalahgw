@@ -7,14 +7,11 @@ export const useLogoutUser = ({ onSuccess }) => {
   return useMutation({
     mutationKey: ["userLogout.auth"],
     mutationFn: async () => {
-      const response = await axiosInstance.delete(
-        "http://localhost/laravel_react_api/public/api/logout",
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      const response = await axiosInstance.delete("/logout", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
 
       return response.data;
     },
