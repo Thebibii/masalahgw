@@ -6,7 +6,7 @@ const LoginPage = () => {
   return (
     <AuthLayouts
       type="login"
-      title="👋 Login Dulu Brey"
+      title="👋 Login Dulu Bre"
       desc="Sebelum mulai masuk ke menu utama,
     yakali nggak login bre"
     >
